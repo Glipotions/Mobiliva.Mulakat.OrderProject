@@ -35,11 +35,11 @@ Mobiliva.Mulakat Projesi: İstenilenlerin hepsi yapıldı MemoryCache için iki 
 	
 ##### CrossCuttingConcern: Bu Klasör projede kullanılacak özelliklerin managerlerinin yazıldığı klasördür.
 
--Caching: Microsoft ve Redis Cache Yapılandırması içerir. Hangisi kullanılmak isteniyorsa DependencyResolver klasöründeki CoreModule dan seçer ve tüm proje tek değişiklikle cache yönetimini değiştirmiş olur. 
+	-Caching: Microsoft ve Redis Cache Yapılandırması içerir. Hangisi kullanılmak isteniyorsa DependencyResolver klasöründeki CoreModule dan seçer ve tüm proje tek 	değişiklikle cache yönetimini değiştirmiş olur. 
 
--Logging: Log işlemlerinin yapılmasını sağlayan Manager. Serilog eklendi ancak istenirse diğer loglama managerleri de eklenerek kolayca tüm yapının log sistemi değiştirilebilir. 
+	-Logging: Log işlemlerinin yapılmasını sağlayan Manager. Serilog eklendi ancak istenirse diğer loglama managerleri de eklenerek kolayca tüm yapının log sistemi 	değiştirilebilir. 
 
--Validation: Doğrulma işlemlerinin manageri
+	-Validation: Doğrulma işlemlerinin manageri
 
 ##### DataAccess: DataAccess katmanına ayırılmış klasördür. EntityFramework’ün ekleme silme, güncelleme ve veri getirme işlemlemlerini yaptığı kodlar burada tutulur.
 
@@ -54,17 +54,17 @@ Mobiliva.Mulakat Projesi: İstenilenlerin hepsi yapıldı MemoryCache için iki 
 
 #### Utilities: Araçların belirtildiği klasör
 
-##### Business: İş kuralları
+	-Business: İş kuralları
 		
--Interceptors: Aspect Klasöründe oluşturulan tüm attributelerin attribute özelliğini kazandıran yapı bu klasörde ayarlanır.
+	-Interceptors: Aspect Klasöründe oluşturulan tüm attributelerin attribute özelliğini kazandıran yapı bu klasörde ayarlanır.
 
--IoC: ServiceTool ve ICoreModule burada oluşturulur mimarinin temelindeki bir çok şey bu 2 sınıfı kullanır.
+	-IoC: ServiceTool ve ICoreModule burada oluşturulur mimarinin temelindeki bir çok şey bu 2 sınıfı kullanır.
 
--MessageBrokers: RabbitMq
+	-MessageBrokers: RabbitMq
 
--Messages: Mesajların verildiği klasör
+	-Messages: Mesajların verildiği klasör
 
--Results: ApiResponse un verildiği yapıdır.
+	-Results: ApiResponse un verildiği yapıdır.
 
 #### DataAccess: Veritabanını yöneten araca, entitylerin durumunun ayarlandığı yerdir.
 
@@ -73,18 +73,18 @@ Bu projede EntityFramework kullanıyoruz. Entitylerin DataAccessLayerlarının i
 
 #### Business: İşlerin yapıldığı katmandır.
 
--Abstract: Entitylerin Service interfaceleri bu klasörde tutulur.
+	-Abstract: Entitylerin Service interfaceleri bu klasörde tutulur.
 	
--Concrete: Serviceleri oluşturulan entityManager sınıfları bu katmanda doldurulur. Asıl 
-veritabanı işleri burada yapılır.
+	-Concrete: Serviceleri oluşturulan entityManager sınıfları bu katmanda doldurulur. Asıl 
+	veritabanı işleri burada yapılır.
 
--Constant: Sabit değerlerin tutulduğu klasör.
+	-Constant: Sabit değerlerin tutulduğu klasör.
 
-- DependencyResolvers: Web katmanında kod kalabalıklaşmasın diye Entitylerin kayıtlarını buradan yapılır.
+	-DependencyResolvers: Web katmanında kod kalabalıklaşmasın diye Entitylerin kayıtlarını buradan yapılır.
 
--ValidationRules: Doğrulama kurallarının yazıldığı klasör
+	-ValidationRules: Doğrulama kurallarının yazıldığı klasör
 
--AutoMapperProfile: Bu sınıf AutoMapper işlemi yapmayı sağlar.
+	-AutoMapperProfile: Bu sınıf AutoMapper işlemi yapmayı sağlar.
 
 #### WebAPI: ASP.Net katmanıdır.
 
