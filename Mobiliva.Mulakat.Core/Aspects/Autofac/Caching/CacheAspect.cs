@@ -14,6 +14,7 @@
             _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
         }
         /// <ÖZET>
+        /// Intercept araya girme anlamı vardır.
         /// method namei alır örnek : Business.Concrete.OrderManager.GetAll
         /// arguments: GetAll() burada argümen yoktur, GetById(1), burada id argümen olmuş olur. bunu kontrol eder
         /// key: cache de key ile veri bilgisi tutulur, methodName ve varsa argüman sonuna eklenerek key oluşturulur.
