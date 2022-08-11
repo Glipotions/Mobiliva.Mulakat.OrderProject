@@ -14,17 +14,17 @@ namespace Mobiliva.Mulakat.Business.Concrete
         IOrderDal _orderDal;
         IOrderDetailDal _orderDetailDal;
         IMapper _mapper;
-        IMailSenderBackgroundService _messageBrokerHelper;
+        IMailSenderBackgroundService _mailSenderBackgroundService;
 
-        public OrderManager(IOrderDal orderDal, IMapper mapper, IOrderDetailDal orderDetailDal, IMailSenderBackgroundService messageBrokerHelper)
+        public OrderManager(IOrderDal orderDal, IMapper mapper, IOrderDetailDal orderDetailDal, IMailSenderBackgroundService mailSenderBackgroundService)
         {
             _orderDal = orderDal;
             _mapper = mapper;
             _orderDetailDal = orderDetailDal;
-            _messageBrokerHelper = messageBrokerHelper;
+            _mailSenderBackgroundService = mailSenderBackgroundService;
         }
 
-        [TransactionScopeAspect]
+        //[TransactionScopeAspect]
         public IResult Add(CreateOrderRequestDto input)
         {
             var entity = _mapper.Map<CreateOrderRequestDto, Order>(input);
@@ -39,7 +39,7 @@ namespace Mobiliva.Mulakat.Business.Concrete
                 _orderDetailDal.Add(detailEntity);
             }
 
-            _messageBrokerHelper.QueueMessage(new Customer { Email=input.CustomerEmail, Message="Sipariş Oluşturuldu."});
+            //_mailSenderBackgroundService.SendMail($"{new Email(){ To}");
             return new SuccessDataResult<OrderResponseDto>(result, Messages.Added);
         }
 

@@ -7,7 +7,7 @@ namespace Mobiliva.Mulakat.DataAccess.Concrete.EntityFramework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string mySqlConnectionStr = "Server=localhost;Port=3306;Database=Mobiliva.Mulakat;Uid=root;Pwd=12345;";
+            string mySqlConnectionStr = "Server=localhost;Port=3306;Database=Mobiliva.Mulakat;Uid=root;Pwd=123456;";
             optionsBuilder.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr));
         }
 

@@ -12,10 +12,10 @@ namespace Mobiliva.Mulakat.Core.Utilities.MessageBrokers.RabbitMq
         public MqQueueHelper(IConfiguration configuration)
         {
             Configuration = configuration;
-            _brokerOptions = Configuration.GetSection("MessageBrokerOptions").Get<MailSenderBackgroundService>();
+            _brokerOptions = Configuration.GetSection("RabbitMq").Get<MailSenderBackgroundService>();
         }
 
-        public void QueueMessage(Customer messageText)
+        public void SendMail(string messageText)
         {
             var factory = new ConnectionFactory
             {
@@ -26,17 +26,20 @@ namespace Mobiliva.Mulakat.Core.Utilities.MessageBrokers.RabbitMq
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
+                channel.ExchangeDeclare(exchange:"email-box", type:ExchangeType.Direct);
                 channel.QueueDeclare(
-                        queue: "DArchQueue",
+                        queue: "email-send",
                         durable: false,
                         exclusive: false,
                         autoDelete: false,
                         arguments: null);
+                channel.QueueBind(queue: "email-send", exchange: "email-box", routingKey: "email-add");
+
 
                 var message = JsonConvert.SerializeObject(messageText);
                 var body = Encoding.UTF8.GetBytes(message);
 
-                channel.BasicPublish(exchange: "", routingKey: "DArchQueue", basicProperties: null, body: body);
+                channel.BasicPublish(exchange: "email-box", routingKey: "email-add", basicProperties: null, body: body);
             }
         }
     }

@@ -3,6 +3,8 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
 using System.Text;
+using System.Text.Json;
+using Mobiliva.Mulakat.Entities.Dtos;
 
 namespace Mobiliva.Mulakat.Core.Utilities.MessageBrokers.RabbitMq
 {
@@ -15,7 +17,7 @@ namespace Mobiliva.Mulakat.Core.Utilities.MessageBrokers.RabbitMq
             _configuration = configuration;
             _brokerOptions = _configuration.GetSection("MessageBrokerOptions").Get<MailSenderBackgroundService>();
         }
-        public void GetQueue()
+        public async void GetQueue(CancellationToken stoppingToken)
         {
             var factory = new ConnectionFactory()
             {
@@ -26,7 +28,7 @@ namespace Mobiliva.Mulakat.Core.Utilities.MessageBrokers.RabbitMq
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-                channel.QueueDeclare(queue: "DArchQueue",
+                channel.QueueDeclare(queue: "email-send",
                                                          durable: false,
                                                          exclusive: false,
                                                          autoDelete: false,
@@ -37,12 +39,14 @@ namespace Mobiliva.Mulakat.Core.Utilities.MessageBrokers.RabbitMq
                 consumer.Received += (model, mq) =>
                 {
                     var body = mq.Body.ToArray();
-                    var message = Encoding.UTF8.GetString(body);
+                    var json = Encoding.UTF8.GetString(body.ToArray());
+                    //var email = Encoding.UTF8.GetString(body);
+                    var email = JsonSerializer.Deserialize<Email>(json);
 
-                    Console.WriteLine($"Message: {message}");
+                    Console.WriteLine($"Message: {email.Message}");
                 };
 
-                channel.BasicConsume(queue: "DArchQueue",
+                channel.BasicConsume(queue: "email-send",
                                                       autoAck: true,
                                                       consumer: consumer);
                 Console.ReadKey();

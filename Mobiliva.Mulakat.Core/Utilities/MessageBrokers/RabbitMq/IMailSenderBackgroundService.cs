@@ -2,7 +2,7 @@
 {
     public interface IMailSenderBackgroundService
     {
-        //void QueueMessage(string messageText);
-        void QueueMessage(Customer messageText);
+        void SendMail(string messageText);
+        //void QueueMessage(Customer messageText);
     }
 }

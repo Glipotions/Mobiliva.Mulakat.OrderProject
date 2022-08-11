@@ -8,9 +8,9 @@
         public string QueueName { get; set; }
 
     }
-    public class Customer
-    {
-        public string Email { get; set; }
-        public string Message { get; set; }
-    }
+    //public class Customer
+    //{
+    //    public string Email { get; set; }
+    //    public string Message { get; set; }
+    //}
 }
