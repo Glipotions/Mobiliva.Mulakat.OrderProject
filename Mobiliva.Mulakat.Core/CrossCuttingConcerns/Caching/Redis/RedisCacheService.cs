@@ -5,14 +5,14 @@ namespace Mobiliva.Mulakat.Core.CrossCuttingConcerns.Caching.Redis;
 
 public class RedisCacheService : ICacheService
 {
-    private readonly IConnectionMultiplexer _redisCon;
+    private readonly IConnectionMultiplexer _connectionMultiplexer;
     private readonly IDatabase _cache;
     private TimeSpan ExpireTime => TimeSpan.FromDays(1);
 
-    public RedisCacheService(IConnectionMultiplexer redisCon)
+    public RedisCacheService(IConnectionMultiplexer connectionMultiplexer)
     {
-        _redisCon = redisCon;
-        _cache = redisCon.GetDatabase();
+        _connectionMultiplexer = connectionMultiplexer;
+        _cache = connectionMultiplexer.GetDatabase();
     }
 
     public async Task Clear(string key)
@@ -22,10 +22,10 @@ public class RedisCacheService : ICacheService
 
     public void ClearAll()
     {
-        var endpoints = _redisCon.GetEndPoints(true);
+        var endpoints = _connectionMultiplexer.GetEndPoints(true);
         foreach (var endpoint in endpoints)
         {
-            var server = _redisCon.GetServer(endpoint);
+            var server = _connectionMultiplexer.GetServer(endpoint);
             server.FlushAllDatabases();
         }
     }
@@ -43,17 +43,26 @@ public class RedisCacheService : ICacheService
 
     public async Task<string> GetValueAsync(string key)
     {
-        return await _cache.StringGetAsync(key);
+        var db = _connectionMultiplexer.GetDatabase();
+        return await db.StringGetAsync(key);
+        //return await _cache.StringGetAsync(key);
     }
 
     public async Task<bool> SetValueAsync(string key, string value)
     {
-        return await _cache.StringSetAsync(key, value, ExpireTime);
+        var db = _connectionMultiplexer.GetDatabase();
+        return await db.StringSetAsync(key, value);
+
+        //return await _cache.StringSetAsync(key, value, ExpireTime);
     }
 
+    //public T GetOrAdd<T>(string key, Func<T> action) where T : class
     public T GetOrAdd<T>(string key, Func<T> action) where T : class
     {
-        var result = _cache.StringGet(key);
+        var db = _connectionMultiplexer.GetDatabase();
+
+        var result = db.StringGet(key);
+        //var result = _cache.StringGet(key);
         if (result.IsNull)
         {
             result = JsonSerializer.SerializeToUtf8Bytes(action());

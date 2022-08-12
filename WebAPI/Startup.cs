@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Mobiliva.Mulakat.Business;
+using Mobiliva.Mulakat.Core.CrossCuttingConcerns.Caching;
+using Mobiliva.Mulakat.Core.CrossCuttingConcerns.Caching.Redis;
 using Mobiliva.Mulakat.Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Mobiliva.Mulakat.Core.DependencyResolver;
 using Mobiliva.Mulakat.Core.Extensions;
@@ -44,6 +46,8 @@ namespace WebAPI
 			services.AddScoped<IMailSenderBackgroundService, MqQueueHelper>();
 			services.AddScoped<IMessageConsumer, MqConsumerHelper>();
 
+			services.AddSingleton<ICacheService, RedisCacheService>();
+            services.AddSingleton<IConnectionMultiplexer>(x => ConnectionMultiplexer.Connect(Configuration.GetValue<string>(key: "RedisConnection")));
 
 
 		}

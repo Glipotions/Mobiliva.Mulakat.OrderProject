@@ -9,12 +9,12 @@ namespace Mobiliva.Mulakat.Business.Concrete
     public class ProductManager : IProductService
     {
         IProductDal _productDal;
-        public ICacheService CacheService { get; }
+        public ICacheService _cacheService { get; }
 
         public ProductManager(IProductDal productDal, ICacheService cacheService)
         {
             _productDal = productDal;
-            CacheService = cacheService;
+            _cacheService = cacheService;
         }
 
         //[ValidationAspect(typeof(ProductValidator))]
@@ -32,14 +32,14 @@ namespace Mobiliva.Mulakat.Business.Concrete
         }
 
         //[CacheAspect]
-        public IDataResult<List<Product>> GetAll(Expression<Func<Product, bool>> filter = null)
+        public List<Product> GetAll(Expression<Func<Product, bool>> filter = null)
         {
             return GetProductsFromCache();
         }
 
-        private IDataResult<List<Product>> GetProductsFromCache()
+        private List<Product> GetProductsFromCache()
         {
-            return CacheService.GetOrAdd("getallproducts", () => { return new SuccessDataResult<List<Product>>(_productDal.GetAll()); });
+            return _cacheService.GetOrAdd("getallproducts", () => { return new List<Product>(_productDal.GetAll()); });
         }
 
         [CacheAspect]

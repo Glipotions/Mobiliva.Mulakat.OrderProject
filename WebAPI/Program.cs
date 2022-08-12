@@ -31,11 +31,11 @@ var startup = new Startup(builder.Configuration);
 startup.ConfigureServices(builder.Services);
 
 
-//Redis
-IConfiguration configuration = builder.Configuration;
-var multiplexer = ConnectionMultiplexer.Connect(configuration.GetConnectionString("Redis"));
-builder.Services.AddSingleton<IConnectionMultiplexer>(multiplexer);
-builder.Services.AddSingleton<ICacheService, RedisCacheService>();
+////Redis
+//IConfiguration configuration = builder.Configuration;
+//var multiplexer = ConnectionMultiplexer.Connect(configuration.GetConnectionString("Redis"));
+//builder.Services.AddSingleton<IConnectionMultiplexer>(multiplexer);
+//builder.Services.AddSingleton<ICacheService, RedisCacheService>();
 
 var app = builder.Build();
 
