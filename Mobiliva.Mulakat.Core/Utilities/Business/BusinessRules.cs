@@ -8,7 +8,8 @@ namespace Mobiliva.Mulakat.Core.Utilities.Business
         {
             foreach (var logic in logics)
             {
-                if (logic.Status!=Status.Success)
+                //if (logic.Status!=Status.Success)
+                if (!logic.Success)
                 {
                     return logic;
                 }

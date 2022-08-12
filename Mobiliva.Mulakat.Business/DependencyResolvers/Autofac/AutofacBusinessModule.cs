@@ -2,6 +2,8 @@
 using Autofac.Extras.DynamicProxy;
 using Castle.DynamicProxy;
 using Mobiliva.Mulakat.Business.Concrete;
+using Mobiliva.Mulakat.Core.Utilities.Interceptors;
+using Mobiliva.Mulakat.Core.Utilities.MessageBrokers.RabbitMq;
 
 namespace Mobiliva.Mulakat.Business.DependencyResolvers.Autofac
 {
@@ -21,12 +23,13 @@ namespace Mobiliva.Mulakat.Business.DependencyResolvers.Autofac
             //builder.RegisterType<OrderDetailManager>().As<IOrderDetailService>().SingleInstance();
             builder.RegisterType<EfOrderDetailDal>().As<IOrderDetailDal>().SingleInstance();
 
+
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
                 .EnableInterfaceInterceptors(new ProxyGenerationOptions()
                 {
-                    //Selector = new AspectInterceptorSelector()
+                    Selector = new AspectInterceptorSelector()
                 }).SingleInstance();
 
         }

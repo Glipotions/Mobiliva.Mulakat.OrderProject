@@ -1,6 +1,9 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Mobiliva.Mulakat.Business.DependencyResolvers.Autofac;
+using Mobiliva.Mulakat.Core.CrossCuttingConcerns.Caching;
+using Mobiliva.Mulakat.Core.CrossCuttingConcerns.Caching.Redis;
+using StackExchange.Redis;
 using WebAPI;
 
 IHostBuilder CreateHostBuilder(string[] args) =>
@@ -26,6 +29,13 @@ var startup = new Startup(builder.Configuration);
 
 // Manually call ConfigureServices()
 startup.ConfigureServices(builder.Services);
+
+
+//Redis
+IConfiguration configuration = builder.Configuration;
+var multiplexer = ConnectionMultiplexer.Connect(configuration.GetConnectionString("Redis"));
+builder.Services.AddSingleton<IConnectionMultiplexer>(multiplexer);
+builder.Services.AddSingleton<ICacheService, RedisCacheService>();
 
 var app = builder.Build();
 

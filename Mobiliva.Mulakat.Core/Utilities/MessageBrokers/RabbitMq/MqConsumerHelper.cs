@@ -4,7 +4,6 @@ using RabbitMQ.Client.Events;
 using System;
 using System.Text;
 using System.Text.Json;
-using Mobiliva.Mulakat.Entities.Dtos;
 
 namespace Mobiliva.Mulakat.Core.Utilities.MessageBrokers.RabbitMq
 {
@@ -17,7 +16,7 @@ namespace Mobiliva.Mulakat.Core.Utilities.MessageBrokers.RabbitMq
             _configuration = configuration;
             _brokerOptions = _configuration.GetSection("MessageBrokerOptions").Get<MailSenderBackgroundService>();
         }
-        public async void GetQueue(CancellationToken stoppingToken)
+        public void GetQueue(CancellationToken stoppingToken)
         {
             var factory = new ConnectionFactory()
             {

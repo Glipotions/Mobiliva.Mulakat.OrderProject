@@ -19,18 +19,20 @@ namespace WebAPI.Controllers
 		public IActionResult GetAll()
 		{
 			var result = _productService.GetAll();
-			if (result.Status==Status.Success)
-			{
-				return Ok(result);
-			}
-			return BadRequest(result);
+			//if (result.Status==Status.Success)
+			return Ok(result);
+			//if (result.Success)
+			//{
+			//	return Ok(result);
+			//}
+			//return BadRequest(result);
 		}
 
 		[HttpGet("getallbycategoryname")]
-		public IActionResult GetAllCategoryName(string categori)
+		public IActionResult GetAllCategoryName(string? category)
 		{
-			var result = _productService.GetByCategory(categori);
-			if (result.Status == Status.Success)
+			var result = _productService.GetByCategory(category);
+			if (result.Success)
 			{
 				return Ok(result);
 			}
@@ -41,7 +43,7 @@ namespace WebAPI.Controllers
 		public IActionResult GetById(int id)
 		{
 			var result = _productService.GetById(id);
-			if (result.Status == Status.Success)
+			if (result.Success)
 			{
 				return Ok(result);
 			}
@@ -54,7 +56,7 @@ namespace WebAPI.Controllers
 		{
 			var result = _productService.Add(product);
 
-			if (result.Status != Status.Success)
+			if (!result.Success)
 				return BadRequest(result);
 
 			return Ok(result);
@@ -65,7 +67,7 @@ namespace WebAPI.Controllers
 		{
 			var result = _productService.Update(product);
 
-			if (result.Status != Status.Success)
+			if (!result.Success)
 				return BadRequest(result);
 
 			return Ok(result);
@@ -76,7 +78,7 @@ namespace WebAPI.Controllers
 		{
 			var result = _productService.Delete(product);
 
-			if (result.Status != Status.Success)
+			if (!result.Success)
 				return BadRequest(result);
 
 			return Ok(result);

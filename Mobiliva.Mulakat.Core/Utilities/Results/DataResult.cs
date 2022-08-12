@@ -3,12 +3,12 @@
     public class DataResult<T> : Result, IDataResult<T>
     {
 
-        public DataResult(T data, Status status, string message) : base(status, message)
+        public DataResult(T data, bool success, string message) : base(success, message)
         {
             Data = data;
         }
 
-        public DataResult(T data, Status status) : base(status)
+        public DataResult(T data, bool success) : base(success)
         {
             Data = data;
         }

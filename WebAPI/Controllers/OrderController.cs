@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
 		{
 			var result = _orderService.Add(input);
 
-			if (result.Status != Status.Success)
+			if (!result.Success)
 				return BadRequest(result);
 
 			return Ok(result);

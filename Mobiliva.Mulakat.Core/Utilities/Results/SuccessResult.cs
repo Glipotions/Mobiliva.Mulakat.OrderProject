@@ -2,12 +2,12 @@
 {
     public class SuccessResult : Result
     {
-        public SuccessResult(string message) : base(Status.Success, message)
+        public SuccessResult(string message) : base(true, message)
         {
 
         }
 
-        public SuccessResult() : base(Status.Success)
+        public SuccessResult() : base(true)
         {
 
         }

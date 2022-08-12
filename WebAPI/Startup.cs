@@ -10,6 +10,7 @@ using Mobiliva.Mulakat.Core.DependencyResolver;
 using Mobiliva.Mulakat.Core.Extensions;
 using Mobiliva.Mulakat.Core.Utilities.IoC;
 using Mobiliva.Mulakat.Core.Utilities.MessageBrokers.RabbitMq;
+using StackExchange.Redis;
 
 namespace WebAPI
 {
@@ -43,6 +44,8 @@ namespace WebAPI
 			services.AddScoped<IMailSenderBackgroundService, MqQueueHelper>();
 			services.AddScoped<IMessageConsumer, MqConsumerHelper>();
 
+
+
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,15 +57,17 @@ namespace WebAPI
 				app.UseSwagger();
 				app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1"));
 			}
-			//app.ConfigureCustomExceptionMiddleware();
+            //app.ConfigureCustomExceptionMiddleware();
 
-			app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
 
 			app.UseHttpsRedirection();
 
 			app.UseStaticFiles();
 
 			app.UseRouting();
+
+			app.UseAuthentication();
 
 			app.UseAuthorization();
 

@@ -4,8 +4,8 @@ namespace Mobiliva.Mulakat.Core.Utilities.Results
 {
     public interface IResult
     {
-        //bool Success { get; }
-        Status Status { get; }
+        bool Success { get; }
+        //Status Status { get; }
         string Message { get; }
     }
 }

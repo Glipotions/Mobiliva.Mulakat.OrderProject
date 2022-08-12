@@ -2,21 +2,22 @@
 {
     public class SuccessDataResult<T> : DataResult<T>
     {
-        public SuccessDataResult(T data, string message) : base(data, Status.Success, message)
+        // true yerine Status.Success
+        public SuccessDataResult(T data, string message) : base(data, true, message)
         {
 
         }
 
-        public SuccessDataResult(T data) : base(data, Status.Success)
+        public SuccessDataResult(T data) : base(data, true)
         {
 
         }
 
-        public SuccessDataResult(string message) : base(default, Status.Success, message)
+        public SuccessDataResult(string message) : base(default, true, message)
         {
 
         }
-        public SuccessDataResult() : base(default, Status.Success)
+        public SuccessDataResult() : base(default, true)
         {
 
         }

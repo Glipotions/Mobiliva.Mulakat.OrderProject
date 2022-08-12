@@ -1,4 +1,8 @@
-﻿namespace Mobiliva.Mulakat.Core.Aspects.Autofac.Caching
+﻿using Microsoft.AspNetCore.Http;
+using Mobiliva.Mulakat.Core.Utilities.Results;
+using System.Text;
+
+namespace Mobiliva.Mulakat.Core.Aspects.Autofac.Caching
 {
     /// <ÖZET>
     /// Ön Bellekten veri almayı sağlayan yapı, istenilen süre belirtilir o süre boyunca veri cache de kalır.
@@ -13,6 +17,7 @@
             _duration = duration;
             _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
         }
+
         /// <ÖZET>
         /// Intercept araya girme anlamı vardır.
         /// method namei alır örnek : Business.Concrete.OrderManager.GetAll

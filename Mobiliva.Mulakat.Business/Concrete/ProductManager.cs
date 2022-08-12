@@ -1,6 +1,7 @@
 ﻿using Core.Aspects.Autofac.Caching;
 using Mobiliva.Mulakat.Business.Constants;
 using Mobiliva.Mulakat.Core.Aspects.Autofac.Caching;
+using Mobiliva.Mulakat.Core.CrossCuttingConcerns.Caching;
 //using Core.Aspects.Autofac.Validation;
 
 namespace Mobiliva.Mulakat.Business.Concrete
@@ -8,10 +9,12 @@ namespace Mobiliva.Mulakat.Business.Concrete
     public class ProductManager : IProductService
     {
         IProductDal _productDal;
+        public ICacheService CacheService { get; }
 
-        public ProductManager(IProductDal productDal)
+        public ProductManager(IProductDal productDal, ICacheService cacheService)
         {
             _productDal = productDal;
+            CacheService = cacheService;
         }
 
         //[ValidationAspect(typeof(ProductValidator))]
@@ -28,10 +31,15 @@ namespace Mobiliva.Mulakat.Business.Concrete
             return new SuccessResult(Messages.Deleted);
         }
 
-        [CacheAspect]
+        //[CacheAspect]
         public IDataResult<List<Product>> GetAll(Expression<Func<Product, bool>> filter = null)
         {
-            return new SuccessDataResult<List<Product>>(_productDal.GetAll());
+            return GetProductsFromCache();
+        }
+
+        private IDataResult<List<Product>> GetProductsFromCache()
+        {
+            return CacheService.GetOrAdd("getallproducts", () => { return new SuccessDataResult<List<Product>>(_productDal.GetAll()); });
         }
 
         [CacheAspect]

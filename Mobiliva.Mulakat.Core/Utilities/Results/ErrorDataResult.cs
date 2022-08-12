@@ -2,22 +2,22 @@
 {
     public class ErrorDataResult<T> : DataResult<T>
     {
-
-        public ErrorDataResult(T data, string message) : base(data, Status.Failed, message)
+        // false yerine Status.Failed
+        public ErrorDataResult(T data, string message) : base(data, false, message)
         {
 
         }
 
-        public ErrorDataResult(T data) : base(data, Status.Failed)
+        public ErrorDataResult(T data) : base(data, false)
         {
 
         }
 
-        public ErrorDataResult(string message) : base(default, Status.Failed, message)
+        public ErrorDataResult(string message) : base(default, false, message)
         {
 
         }
-        public ErrorDataResult() : base(default, Status.Failed)
+        public ErrorDataResult() : base(default, false)
         {
 
         }
